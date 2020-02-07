@@ -33,12 +33,12 @@ const todaysWeather = {
   weather: 'sunny'
 };
 
-// const logWeather = (forcast: { date: Date; weather: string }): void => {
-//   console.log(forcast.date);
-//   console.log(forcast.weather);
+// const logWeather = (todaysWeather: { date: Date; weather: string }): void => {
+//   console.log(todaysWeather.date);
+//   console.log(todaysWeather.weather);
 // };
 
-// destructuring with annotation to destructure forcast
+// destructuring with annotation to destructure todaysWeather
 const logWeather = ({
   date,
   weather
