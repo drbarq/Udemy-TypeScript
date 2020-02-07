@@ -31,18 +31,23 @@ console.log(vehicle.color);
 // vehicle.honk();
 
 // allows us access to Vechicle class
-// class Car extends Vehicle {
-// 	private drive(): void {
-// 		console.log('vroom');
-// 	}
+class Car extends Vehicle {
+	constructor(public wheels: number, color: string) {
+		// super is a reference to the parent class constructor
+		super(color);
+	}
 
-// 	startDrivingProcess(): void {
-// 		this.drive();
-// 		this.honk();
-// 	}
-// }
+	private drive(): void {
+		console.log('vroom');
+	}
 
-// const car = new Car();
+	startDrivingProcess(): void {
+		this.drive();
+		this.honk();
+	}
+}
 
-// car.startDrivingProcess();
+const car = new Car(4, 'red');
+
+car.startDrivingProcess();
 // car.honk();
