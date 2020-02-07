@@ -26,7 +26,7 @@ let point: { x: number; y: number } = {
 };
 
 // Function
-// Expect the function to return nothing
+// Expect the function to return nothing :: annotation for the vaariable
 const logNumber: (i: number) => void = (i: number) => {
   console.log(i);
 };
