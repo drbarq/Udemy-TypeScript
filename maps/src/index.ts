@@ -1,3 +1,5 @@
+import google from 'googlemaps';
+
 import { User } from './User';
 import { Company } from './Company';
 
@@ -6,3 +8,5 @@ const company = new Company();
 
 console.log(user);
 console.log(company);
+
+google;
