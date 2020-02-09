@@ -1,5 +1,4 @@
 import faker from 'faker';
-import googlemaps from 'googlemaps';
 
 export class User {
 	name: string;
