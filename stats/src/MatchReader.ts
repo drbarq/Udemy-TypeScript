@@ -3,8 +3,9 @@ import { dateStringToDate } from './utils';
 import { MatchResult } from './MatchResult';
 
 type MatchData = [Date, string, string, number, number, MatchResult, string];
+// give me a copy of MatchReader which extends and uses CsvFileReader customized with MatchData generic
 
-export class MatchReader extends CsvFileReader {
+export class MatchReader extends CsvFileReader<MatchData> {
 	mapRow(row: string[]): MatchData {
 		return [
 			dateStringToDate(row[0]),
