@@ -1,5 +1,9 @@
-export class NumbersCollection {
-	constructor(public data: number[]) {}
+import { Sorter } from './sorter';
+
+export class NumbersCollection extends Sorter {
+	constructor(public data: number[]) {
+		super();
+	}
 
 	// get : reference length as expected with a class
 	get length(): number {
