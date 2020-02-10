@@ -15,3 +15,5 @@ for (var _i = 0, _a = reader.data; _i < _a.length; _i++) {
     }
 }
 console.log("Man United won " + manUnitedWins + " games");
+// const dateOfFirstMatch = reader.data[0][0];
+// console.log(reader.data[0]);

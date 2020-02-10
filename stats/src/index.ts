@@ -15,3 +15,6 @@ for (let match of reader.data) {
 }
 
 console.log(`Man United won ${manUnitedWins} games`);
+
+// const dateOfFirstMatch = reader.data[0][0];
+// console.log(reader.data[0]);
