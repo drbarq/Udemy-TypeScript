@@ -129,6 +129,7 @@ var User =
 function () {
   function User(data) {
     this.data = data;
+    this.events = {};
   }
 
   User.prototype.get = function (propName) {
@@ -138,6 +139,15 @@ function () {
 
   User.prototype.set = function (update) {
     Object.assign(this.data, update);
+  }; // callback is a function, takes no arguments and returns nothing
+  // on(eventName: string, callback: () => {}) {}
+
+
+  User.prototype.on = function (eventName, callback) {
+    // this.events[eventName]; //Callback[] or undefined
+    var handlers = this.events[eventName] || [];
+    handlers.push(callback);
+    this.events[eventName] = handlers;
   };
 
   return User;
@@ -157,17 +167,9 @@ var user = new User_1.User({
   name: 'Joe',
   age: 20
 });
-console.log(user.get('name'));
-console.log(user.get('age'));
-user.set({
-  name: 'newName',
-  age: 999
-});
-user.set({
-  name: 'back to joe'
-});
-console.log(user.get('name'));
-console.log(user.get('age'));
+user.on('change', function () {});
+user.on('change', function () {});
+user.on('sdfdf', function () {});
 console.log(user);
 },{"./models/User":"src/models/User.ts"}],"../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -197,7 +199,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63933" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64243" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
