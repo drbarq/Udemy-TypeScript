@@ -2,7 +2,7 @@ import fs from 'fs';
 
 import { OutputTarget } from '../Summary';
 
-export class HtmlReports implements OutputTarget {
+export class HtmlReport implements OutputTarget {
 	print(report: string): void {
 		const html = `
     <div>
@@ -14,6 +14,6 @@ export class HtmlReports implements OutputTarget {
       </div>
     </div>`;
 
-		fs.writeFileSync();
+		fs.writeFileSync('report.html', html);
 	}
 }
