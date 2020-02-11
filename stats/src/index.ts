@@ -12,11 +12,13 @@ const matchReader = new MatchReader(csvFileReader);
 matchReader.load();
 
 // connect the composition with output instances s
-const summary = new Summary(
-	new WinsAnalysis('Man United'),
-	// new ConsoleReport()
-	new HtmlReport()
-);
+// const summary = new Summary(
+// 	new WinsAnalysis('Man United'),
+// 	// new ConsoleReport()
+// 	new HtmlReport()
+// );
+
+const summary = Summary.winsAnalysisWithHtmlReport('Man United');
 
 summary.buildAndPrintReport(matchReader.matches);
 
