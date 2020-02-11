@@ -1,4 +1,7 @@
+import axios, { AxiosResponse } from 'axios';
+
 interface UserProps {
+	id?: number;
 	name?: string;
 	age?: number;
 	// the ? makes the field optional
@@ -7,6 +10,8 @@ interface UserProps {
 // WRONG - returns an object
 // type Callback = () => {};
 type Callback = () => void;
+
+const usersUrl = 'http://localhost:3000/users';
 
 export class User {
 	events: { [key: string]: Callback[] } = {};
@@ -41,5 +46,26 @@ export class User {
 		handlers.forEach(callback => {
 			callback();
 		});
+	}
+
+	fetch(): void {
+		axios
+			// .get(`http://localhost:3000/users/${this.get('id')}`)
+			.get(`${usersUrl}/${this.get('id')}`)
+			.then((response: AxiosResponse): void => {
+				this.set(response.data);
+			});
+	}
+
+	save(): void {
+		const id = this.get('id');
+
+		if (id) {
+			// put
+			axios.put(`${usersUrl}/${id}`, this.data);
+		} else {
+			// post
+			axios.post(usersUrl, this.data);
+		}
 	}
 }
