@@ -150,6 +150,18 @@ function () {
     this.events[eventName] = handlers;
   };
 
+  User.prototype.trigger = function (eventName) {
+    var handlers = this.events[eventName];
+
+    if (!handlers || handlers.length === 0) {
+      return;
+    }
+
+    handlers.forEach(function (callback) {
+      callback();
+    });
+  };
+
   return User;
 }();
 
@@ -167,9 +179,16 @@ var user = new User_1.User({
   name: 'Joe',
   age: 20
 });
-user.on('change', function () {});
-user.on('change', function () {});
-user.on('sdfdf', function () {});
+user.on('change', function () {
+  console.log('Change #1');
+});
+user.on('change', function () {
+  console.log('Change #2');
+});
+user.on('save', function () {
+  console.log('Save was triggered');
+});
+user.trigger('asdfdsf');
 console.log(user);
 },{"./models/User":"src/models/User.ts"}],"../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -199,7 +218,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64243" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64802" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
