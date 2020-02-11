@@ -1,6 +1,8 @@
-import { MatchResult } from './MatchResult';
 import { MatchReader } from './MatchReader';
 import { CsvFileReader } from './CsvFileReader';
+import { ConsoleReport } from './outputTargets/ConsoleReport';
+import { WinsAnalysis } from './analyzers/WinsAnalysis';
+import { Summary } from './Summary';
 
 // create an object that satisfies the DataReader interface
 const csvFileReader = new CsvFileReader('football.csv');
@@ -8,19 +10,21 @@ const csvFileReader = new CsvFileReader('football.csv');
 // crete and instance of MatchReader and pass in something that satisfies the 'DataReader' interface
 const matchReader = new MatchReader(csvFileReader);
 matchReader.load();
-// ^^ results in  ==>  matchReader.matches
 
-let manUnitedWins = 0;
+// pre refector
+// import { MatchResult } from './MatchResult';
+// import { MatchReader } from './MatchReader';
+// import { CsvFileReader } from './CsvFileReader';
 
-for (let match of matchReader.matches) {
-	if (match[1] === 'Man United' && match[5] === MatchResult.HomeWin) {
-		manUnitedWins++;
-	} else if (match[2] === 'Man United' && match[5] === MatchResult.AwayWin) {
-		manUnitedWins++;
-	}
-}
+// // create an object that satisfies the DataReader interface
+// const csvFileReader = new CsvFileReader('football.csv');
 
-console.log(`Man United won ${manUnitedWins} games`);
+// // crete and instance of MatchReader and pass in something that satisfies the 'DataReader' interface
+// const matchReader = new MatchReader(csvFileReader);
+// matchReader.load();
+// // ^^ results in  ==>  matchReader.matches
 
-// const dateOfFirstMatch = reader.data[0][0];
-// console.log(reader.data[0]);
+// // console.log(`Man United won ${manUnitedWins} games`);
+
+// // const dateOfFirstMatch = reader.data[0][0];
+// // console.log(reader.data[0]);
