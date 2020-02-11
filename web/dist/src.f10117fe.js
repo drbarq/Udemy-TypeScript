@@ -133,6 +133,11 @@ function () {
 
   User.prototype.get = function (propName) {
     return this.data[propName];
+  }; // set(update: { name: string; age: number }): void {}   // the same set below
+
+
+  User.prototype.set = function (update) {
+    Object.assign(this.data, update);
   };
 
   return User;
@@ -154,6 +159,16 @@ var user = new User_1.User({
 });
 console.log(user.get('name'));
 console.log(user.get('age'));
+user.set({
+  name: 'newName',
+  age: 999
+});
+user.set({
+  name: 'back to joe'
+});
+console.log(user.get('name'));
+console.log(user.get('age'));
+console.log(user);
 },{"./models/User":"src/models/User.ts"}],"../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -182,7 +197,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63723" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63933" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
