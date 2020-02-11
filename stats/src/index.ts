@@ -11,8 +11,16 @@ const csvFileReader = new CsvFileReader('football.csv');
 const matchReader = new MatchReader(csvFileReader);
 matchReader.load();
 
+// connect the composition with output instances s
+const summary = new Summary(
+	new WinsAnalysis('Man United'),
+	new ConsoleReport()
+);
+
+summary.buildAndPrintReport(matchReader.matches);
+
 // pre refector
-// import { MatchResult } from './MatchResult';
+// import { MatchResult } from './MatchResult';WinsAnalysis
 // import { MatchReader } from './MatchReader';
 // import { CsvFileReader } from './CsvFileReader';
 
