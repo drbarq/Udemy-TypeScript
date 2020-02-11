@@ -8,7 +8,7 @@ var HtmlReport = /** @class */ (function () {
     function HtmlReport() {
     }
     HtmlReport.prototype.print = function (report) {
-        var html = "\n      <div>\n        <h1>\n          Analysis Output\n        </h1>\n        <div>\n          " + report + "\n        </div>\n      </div>\n    ";
+        var html = "\n      <div>\n        <h1>Analysis Output</h1>\n        <div>" + report + "</div>\n      </div>\n    ";
         fs_1.default.writeFileSync('report.html', html);
     };
     return HtmlReport;
