@@ -12,9 +12,10 @@ const usersUrl = 'http://localhost:3000/users';
 // only accept properties into constructor
 // hard code dependencies as class properties
 // lose some benefits of composition
+//
 
 export class User {
-	events: Eventing = new Eventing();
+	// events: Eventing = new Eventing();
 
 	constructor(private data: UserProps) {}
 
@@ -50,4 +51,4 @@ export class User {
 
 const user = new User({});
 
-user.events; // already built in
+// user.events; // already built in
