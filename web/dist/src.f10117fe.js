@@ -130,31 +130,22 @@ function () {
   function Model(attributes, events, sync) {
     this.attributes = attributes;
     this.events = events;
-    this.sync = sync;
-  }
+    this.sync = sync; // replaces the getters
 
-  Object.defineProperty(Model.prototype, "on", {
-    get: function get() {
-      // on method on the eventing class
-      return this.events.on;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(Model.prototype, "trigger", {
-    get: function get() {
-      return this.events.trigger;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(Model.prototype, "get", {
-    get: function get() {
-      return this.attributes.get;
-    },
-    enumerable: true,
-    configurable: true
-  });
+    this.on = this.events.on;
+    this.trigger = this.events.trigger;
+    this.get = this.attributes.get;
+  } // get on() {
+  // 	// on method on the eventing class
+  // 	return this.events.on;
+  // }
+  // get trigger() {
+  // 	return this.events.trigger;
+  // }
+  // get get() {
+  // 	return this.attributes.get;
+  // }
+
 
   Model.prototype.set = function (update) {
     this.attributes.set(update);
@@ -2167,11 +2158,7 @@ function (_super) {
   return User;
 }(Model_1.Model);
 
-exports.User = User;
-var user = User.buildUser({});
-user.get('id');
-user.get('name');
-user.get('age'); // import { Eventing } from './Eventing';
+exports.User = User; // import { Eventing } from './Eventing';
 // import { Sync } from './Sync';
 // import { Attributes } from './Attributes';
 // import { AxiosResponse } from 'axios';
