@@ -2,7 +2,15 @@ import { User } from './models/User';
 
 const user = new User({ name: 'new record', age: 0 });
 
-user.save();
+// user.save();
+
+// since Eventing is a module which is nested within User it needs to be called as nested
+
+user.events.on('change', () => {
+	console.log('change');
+});
+
+user.events.trigger('change');
 
 // update an existing user
 // const user = new User({ id: 1 });
