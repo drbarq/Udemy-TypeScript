@@ -2,6 +2,40 @@ import { User } from './models/User';
 
 const user = new User({ name: 'new record', age: 0 });
 
+console.log(user.get('name'));
+
+user.on('change', () => {
+	console.log('user was changed ');
+});
+
+user.trigger('change');
+
+// reminder on how 'this' works in js
+
+// return the on function from the events class
+// getting back a reference for the on method on the eventing class
+// const on = user.on;
+
+// user.on('change', () => {
+// 	console.log('user was changed ');
+// });
+
+// quick lesson on accessors
+
+// class Person {
+// 	constructor(public firstName: string, public lastName: string) {}
+
+// 	get fullName(): string {
+// 		return `${this.firstName} ${this.lastName}`;
+// 	}
+// }
+
+// const person = new Person('firstname', 'lastname');
+// // normal function, needs to be invoked
+// // console.log(person.fullName());
+// // using the get accessor
+// console.log(person.fullName);
+
 // user.save();
 
 // since Eventing is a module which is nested within User it needs to be called as nested

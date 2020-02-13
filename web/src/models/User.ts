@@ -20,6 +20,24 @@ export class User {
 	constructor(attrs: UserProps) {
 		this.attributes = new Attributes<UserProps>(attrs);
 	}
+
+	// if we wanted to change anyting for user, we would have to change eventing class
+	// on(eventName: string, callback: Callback): void {
+	// 	this.events.on(eventName, callback);
+	// }
+
+	get on() {
+		// on method on the eventing class
+		return this.events.on;
+	}
+
+	get trigger() {
+		return this.events.trigger;
+	}
+
+	get get() {
+		return this.attributes.get;
+	}
 }
 
 // pre refactor

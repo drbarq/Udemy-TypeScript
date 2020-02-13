@@ -128,27 +128,29 @@ var Eventing =
 /** @class */
 function () {
   function Eventing() {
+    var _this = this;
+
     this.events = {};
+
+    this.on = function (eventName, callback) {
+      // this.events[eventName]; //Callback[] or undefined
+      var handlers = _this.events[eventName] || [];
+      handlers.push(callback);
+      _this.events[eventName] = handlers;
+    };
+
+    this.trigger = function (eventName) {
+      var handlers = _this.events[eventName];
+
+      if (!handlers || handlers.length === 0) {
+        return;
+      }
+
+      handlers.forEach(function (callback) {
+        callback();
+      });
+    };
   }
-
-  Eventing.prototype.on = function (eventName, callback) {
-    // this.events[eventName]; //Callback[] or undefined
-    var handlers = this.events[eventName] || [];
-    handlers.push(callback);
-    this.events[eventName] = handlers;
-  };
-
-  Eventing.prototype.trigger = function (eventName) {
-    var handlers = this.events[eventName];
-
-    if (!handlers || handlers.length === 0) {
-      return;
-    }
-
-    handlers.forEach(function (callback) {
-      callback();
-    });
-  };
 
   return Eventing;
 }();
@@ -1982,13 +1984,15 @@ var Attributes =
 /** @class */
 function () {
   function Attributes(data) {
-    this.data = data;
-  } // K | T is not a special operator
+    var _this = this;
 
+    this.data = data; // K | T is not a special operator
+    // this will be bound to the instance of this
 
-  Attributes.prototype.get = function (key) {
-    return this.data[key];
-  };
+    this.get = function (key) {
+      return _this.data[key];
+    };
+  }
 
   Attributes.prototype.set = function (update) {
     Object.assign(this.data, update);
@@ -2053,6 +2057,32 @@ function () {
     this.attributes = new Attributes_1.Attributes(attrs);
   }
 
+  Object.defineProperty(User.prototype, "on", {
+    // if we wanted to change anyting for user, we would have to change eventing class
+    // on(eventName: string, callback: Callback): void {
+    // 	this.events.on(eventName, callback);
+    // }
+    get: function get() {
+      // on method on the eventing class
+      return this.events.on;
+    },
+    enumerable: true,
+    configurable: true
+  });
+  Object.defineProperty(User.prototype, "trigger", {
+    get: function get() {
+      return this.events.trigger;
+    },
+    enumerable: true,
+    configurable: true
+  });
+  Object.defineProperty(User.prototype, "get", {
+    get: function get() {
+      return this.attributes.get;
+    },
+    enumerable: true,
+    configurable: true
+  });
   return User;
 }();
 
@@ -2126,7 +2156,31 @@ var User_1 = require("./models/User");
 var user = new User_1.User({
   name: 'new record',
   age: 0
-}); // user.save();
+});
+console.log(user.get('name'));
+user.on('change', function () {
+  console.log('user was changed ');
+});
+user.trigger('change'); // reminder on how 'this' works in js
+// return the on function from the events class
+// getting back a reference for the on method on the eventing class
+// const on = user.on;
+// user.on('change', () => {
+// 	console.log('user was changed ');
+// });
+// quick lesson on accessors
+// class Person {
+// 	constructor(public firstName: string, public lastName: string) {}
+// 	get fullName(): string {
+// 		return `${this.firstName} ${this.lastName}`;
+// 	}
+// }
+// const person = new Person('firstname', 'lastname');
+// // normal function, needs to be invoked
+// // console.log(person.fullName());
+// // using the get accessor
+// console.log(person.fullName);
+// user.save();
 // since Eventing is a module which is nested within User it needs to be called as nested
 // user.events.on('change', () => {
 // 	console.log('change');
@@ -2183,7 +2237,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60378" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64523" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

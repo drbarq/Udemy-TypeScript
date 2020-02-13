@@ -2,9 +2,10 @@ export class Attributes<T> {
 	constructor(private data: T) {}
 
 	// K | T is not a special operator
-	get<K extends keyof T>(key: K): T[K] {
+	// this will be bound to the instance of this
+	get = <K extends keyof T>(key: K): T[K] => {
 		return this.data[key];
-	}
+	};
 
 	set(update: T): void {
 		Object.assign(this.data, update);
