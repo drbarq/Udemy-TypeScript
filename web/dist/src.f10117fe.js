@@ -1971,7 +1971,63 @@ exports.Sync = Sync; // fetch(id: number): void {
 //     axios.post(this.rootUrl, data);
 //   }
 // }
-},{"axios":"node_modules/axios/index.js"}],"src/models/User.ts":[function(require,module,exports) {
+},{"axios":"node_modules/axios/index.js"}],"src/models/Attributes.ts":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var Attributes =
+/** @class */
+function () {
+  function Attributes(data) {
+    this.data = data;
+  } // K | T is not a special operator
+
+
+  Attributes.prototype.get = function (key) {
+    return this.data[key];
+  };
+
+  Attributes.prototype.set = function (update) {
+    Object.assign(this.data, update);
+  };
+
+  return Attributes;
+}();
+
+exports.Attributes = Attributes; // uses the UserProps object to determine how the attributes are read via the UserProps key
+// import { UserProps } from './User';
+// export class Attributes<T> {
+// 	constructor(private data: T) {}
+// 	// K | T is not a special operator
+// 	get<K extends keyof T>(key: K): T[K] {
+// 		return this.data[key];
+// 	}
+// 	set(update: T): void {
+// 		Object.assign(this.data, update);
+// 	}
+// }
+// const attrs = new Attributes<UserProps>({
+// 	id: 5,
+// 	age: 20,
+// 	name: 'asadf'
+// });
+// const name = attrs.get('name');
+// const age = attrs.get('age');
+// const id = attrs.get('id');
+// preRefactor
+// export class Attributes<T> {
+// 	constructor(private data: T) {}
+// 	get(propName: string): string | number {
+// 		return this.data[propName];
+// 	}
+// 	set(update: T): void {
+// 		Object.assign(this.data, update);
+// 	}
+// }
+},{}],"src/models/User.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1982,14 +2038,19 @@ var Eventing_1 = require("./Eventing");
 
 var Sync_1 = require("./Sync");
 
+var Attributes_1 = require("./Attributes");
+
 var rootUrl = 'http://localhost:3000/users';
 
 var User =
 /** @class */
 function () {
-  function User() {
+  // initializer that requires inputs
+  function User(attrs) {
+    // same line initializer auto created
     this.events = new Eventing_1.Eventing();
     this.sync = new Sync_1.Sync(rootUrl);
+    this.attributes = new Attributes_1.Attributes(attrs);
   }
 
   return User;
@@ -2053,7 +2114,7 @@ exports.User = User; // pre refactor
 // 		}
 // 	}
 // }
-},{"./Eventing":"src/models/Eventing.ts","./Sync":"src/models/Sync.ts"}],"src/index.ts":[function(require,module,exports) {
+},{"./Eventing":"src/models/Eventing.ts","./Sync":"src/models/Sync.ts","./Attributes":"src/models/Attributes.ts"}],"src/index.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2067,11 +2128,11 @@ var user = new User_1.User({
   age: 0
 }); // user.save();
 // since Eventing is a module which is nested within User it needs to be called as nested
-
-user.events.on('change', function () {
-  console.log('change');
-});
-user.events.trigger('change'); // update an existing user
+// user.events.on('change', () => {
+// 	console.log('change');
+// });
+// user.events.trigger('change');
+// update an existing user
 // const user = new User({ id: 1 });
 // user.set({ name: 'new name', age: 2000 });
 // user.save();
