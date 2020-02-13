@@ -1998,6 +1998,10 @@ function () {
     Object.assign(this.data, update);
   };
 
+  Attributes.prototype.getAll = function () {
+    return this.data;
+  };
+
   return Attributes;
 }();
 
@@ -2083,6 +2087,37 @@ function () {
     enumerable: true,
     configurable: true
   });
+
+  User.prototype.set = function (update) {
+    this.attributes.set(update);
+    this.events.trigger('change');
+  };
+
+  User.prototype.fetch = function () {
+    var _this = this;
+
+    var id = this.get('id');
+
+    if (typeof id !== 'number') {
+      throw new Error('Cannot fetch without an id');
+    }
+
+    this.sync.fetch(id).then(function (response) {
+      // this.attributes.set(response.data)  calls in the attributes class
+      _this.set(response.data);
+    });
+  };
+
+  User.prototype.save = function () {
+    var _this = this;
+
+    this.sync.save(this.attributes.getAll()).then(function (response) {
+      _this.trigger('save');
+    }).catch(function () {
+      _this.trigger('error');
+    });
+  };
+
   return User;
 }();
 
@@ -2154,14 +2189,20 @@ Object.defineProperty(exports, "__esModule", {
 var User_1 = require("./models/User");
 
 var user = new User_1.User({
-  name: 'new record',
-  age: 0
+  id: 1,
+  name: 'newest name',
+  age: 999
 });
-console.log(user.get('name'));
-user.on('change', function () {
-  console.log('user was changed ');
+user.on('save', function () {
+  console.log(user);
 });
-user.trigger('change'); // reminder on how 'this' works in js
+user.save(); // const user = new User({ name: 'new record', age: 0 });
+// console.log(user.get('name'));
+// user.on('change', () => {
+// 	console.log('user was changed ');
+// });
+// user.set({ name: 'new name' });
+// reminder on how 'this' works in js
 // return the on function from the events class
 // getting back a reference for the on method on the eventing class
 // const on = user.on;
