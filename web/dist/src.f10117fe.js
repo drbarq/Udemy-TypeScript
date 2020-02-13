@@ -129,7 +129,20 @@ var UserForm =
 function () {
   function UserForm(parent) {
     this.parent = parent;
-  }
+  } // we are going to return an object, not sure what it will say but its a string
+
+
+  UserForm.prototype.eventsMap = function () {
+    return {
+      'click:button': this.onButtonClick // 'hover:h1': this.onHoverHeader,
+      // 'drag:div': this.onDragDiv
+
+    };
+  };
+
+  UserForm.prototype.onButtonClick = function () {
+    console.log('Hi there');
+  };
 
   UserForm.prototype.template = function () {
     return "\n      <div>\n        <h1>User Form</h1>\n        <input />\n      </div>\n    ";
