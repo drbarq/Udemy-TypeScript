@@ -1,7 +1,7 @@
-import { Eventing } from './Eventing';
-import { Sync } from './Sync';
+import { Model } from './Model';
 import { Attributes } from './Attributes';
-import { AxiosResponse } from 'axios';
+import { Sync } from './Sync';
+import { Eventing } from './Eventing';
 
 export interface UserProps {
 	id?: number;
@@ -11,64 +11,42 @@ export interface UserProps {
 
 const rootUrl = 'http://localhost:3000/users';
 
-export class User {
-	// same line initializer auto created
-	public events: Eventing = new Eventing();
-	public sync: Sync<UserProps> = new Sync<UserProps>(rootUrl);
-	public attributes: Attributes<UserProps>;
-
-	// initializer that requires inputs
-	constructor(attrs: UserProps) {
-		this.attributes = new Attributes<UserProps>(attrs);
-	}
-
-	// if we wanted to change anyting for user, we would have to change eventing class
-	// on(eventName: string, callback: Callback): void {
-	// 	this.events.on(eventName, callback);
-	// }
-
-	get on() {
-		// on method on the eventing class
-		return this.events.on;
-	}
-
-	get trigger() {
-		return this.events.trigger;
-	}
-
-	get get() {
-		return this.attributes.get;
-	}
-
-	set(update: UserProps): void {
-		this.attributes.set(update);
-		this.events.trigger('change');
-	}
-
-	fetch(): void {
-		const id = this.get('id');
-
-		if (typeof id !== 'number') {
-			throw new Error('Cannot fetch without an id');
-		}
-
-		this.sync.fetch(id).then((response: AxiosResponse): void => {
-			// this.attributes.set(response.data)  calls in the attributes class
-			this.set(response.data);
-		});
-	}
-
-	save(): void {
-		this.sync
-			.save(this.attributes.getAll())
-			.then((response: AxiosResponse): void => {
-				this.trigger('save');
-			})
-			.catch(() => {
-				this.trigger('error');
-			});
+export class User extends Model<UserProps> {
+	static buildUser(attrs: UserProps): User {
+		return new User(
+			new Attributes<UserProps>(attrs),
+			new Eventing(),
+			new Sync<UserProps>(rootUrl)
+		);
 	}
 }
+
+const user = User.buildUser({});
+user.get('id');
+user.get('name');
+user.get('age');
+
+// import { Eventing } from './Eventing';
+// import { Sync } from './Sync';
+// import { Attributes } from './Attributes';
+// import { AxiosResponse } from 'axios';
+
+// export class User {
+// 	// same line initializer auto created
+// 	public events: Eventing = new Eventing();
+// 	public sync: Sync<UserProps> = new Sync<UserProps>(rootUrl);
+// 	public attributes: Attributes<UserProps>;
+
+// 	// initializer that requires inputs
+// 	constructor(attrs: UserProps) {
+// 		this.attributes = new Attributes<UserProps>(attrs);
+// 	}
+// }
+
+// if we wanted to change anyting for user, we would have to change eventing class
+// on(eventName: string, callback: Callback): void {
+// 	this.events.on(eventName, callback);
+// }
 
 // pre refactor
 // import axios, { AxiosResponse } from 'axios';
