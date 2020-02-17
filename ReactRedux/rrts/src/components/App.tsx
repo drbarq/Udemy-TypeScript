@@ -5,7 +5,8 @@ import { StoreState } from '../reducers';
 
 interface AppProps {
 	todos: Todo[];
-	fetchTodos: typeof fetchTodos;
+	// fetchTodos: typeof fetchTodos;  this is an error with redux thunk and connect, just say it will be a function
+	fetchTodos: Function;
 	deleteTodo: typeof deleteTodo;
 }
 
