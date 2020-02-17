@@ -28,3 +28,8 @@ class App extends React.Component<AppProps> {
 }
 
 ReactDom.render(<App color="red" />, document.querySelector('#root'));
+
+// functional component example
+// const App = (props: AppProps): JSX.Element => {
+// 	return <div>{props.color}</div>;
+// };
