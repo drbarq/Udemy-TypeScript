@@ -1,4 +1,5 @@
 class Boat {
+	@testDecorator
 	// property
 	color: string = 'red';
 
@@ -16,6 +17,11 @@ class Boat {
 	}
 }
 
+function testDecorator(target: any, key: string) {
+	console.log(target);
+	console.log(key);
+}
+
 // decorator factory
 function logError(errorMessage: string) {
 	return function(target: any, key: string, desc: PropertyDescriptor): void {
@@ -31,7 +37,7 @@ function logError(errorMessage: string) {
 	};
 }
 
-new Boat().pilot();
+// new Boat().pilot();
 
 // decorator examples
 // class Boat {
